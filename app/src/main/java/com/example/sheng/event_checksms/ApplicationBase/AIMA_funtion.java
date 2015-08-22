@@ -162,6 +162,7 @@ public class AIMA_funtion {
                 Message msg_mobile = new Message();
                 msg_mobile.what = 2;
                 msg_mobile.obj = AimaAPI.MOBILE;
+
                 getMobileNums();
                 aimaHandler.sendMessage(msg_mobile);
             }

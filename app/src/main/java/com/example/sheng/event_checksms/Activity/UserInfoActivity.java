@@ -3,6 +3,7 @@ package com.example.sheng.event_checksms.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.ClipboardManager;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sheng.event_checksms.ApplicationBase.AIMA_funtion;
 import com.example.sheng.event_checksms.ApplicationBase.AimaAPI;
@@ -21,7 +23,7 @@ import com.example.sheng.event_checksms.Utile.Utils;
 public class UserInfoActivity extends AppCompatActivity {
 
     TextView text_userinfos, text_sms;
-    Button btn_get_user_info, btn_get_mobile, btn_get_sms, btn_get_nums, btn_giveup;
+    Button btn_get_user_info, btn_get_mobile, btn_get_sms, btn_copy, btn_giveup;
     static ListView list_sms_history;
     static Context context;
     Spinner spinner_mobiles, spinner_pid;
@@ -45,6 +47,7 @@ public class UserInfoActivity extends AppCompatActivity {
         btn_get_sms = (Button) findViewById(R.id.btn_get_sms);
         btn_get_user_info = (Button) findViewById(R.id.btn_getuserinfo);
         btn_giveup = (Button) findViewById(R.id.btn_giveup);
+        btn_copy=(Button)findViewById(R.id.btn_copy);
 
         spinner_mobiles = (Spinner) findViewById(R.id.spinner_mobiles);
 
@@ -76,7 +79,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
 
                 aima_funtion.getMobile(((TextView) view.findViewById(R.id.text_history_mobile)).getText().subSequence(5, 16).toString());
-                System.out.println(((TextView) view.findViewById(R.id.text_history_mobile)).getText().subSequence(5, 16).toString());
+
 
             }
         });
@@ -122,6 +125,14 @@ public class UserInfoActivity extends AppCompatActivity {
                         aima_funtion.giveUpNum();
                         break;
 
+
+                    case R.id.btn_copy:
+                        ClipboardManager copy = (ClipboardManager) UserInfoActivity.this.getSystemService(Context.CLIPBOARD_SERVICE);
+                        copy.setText(AimaAPI.MOBILE);
+                        Toast.makeText(UserInfoActivity.this,"复制成功:"+AimaAPI.MOBILE,Toast.LENGTH_SHORT);
+
+                        break;
+
                 }
 
             }
@@ -131,6 +142,7 @@ public class UserInfoActivity extends AppCompatActivity {
         btn_get_mobile.setOnClickListener(btn_listener);
         btn_get_sms.setOnClickListener(btn_listener);
         btn_giveup.setOnClickListener(btn_listener);
+        btn_copy.setOnClickListener(btn_listener);
         aima_funtion.getUserInfo();
         aima_funtion.getMobileNums();
         reflushSMSList();
