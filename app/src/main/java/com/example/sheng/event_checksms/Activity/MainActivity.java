@@ -1,15 +1,20 @@
 package com.example.sheng.event_checksms.Activity;
 
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RemoteViews;
 
 import com.example.sheng.event_checksms.ApplicationBase.AimaAPI;
 import com.example.sheng.event_checksms.R;
@@ -36,6 +41,14 @@ public class MainActivity extends AppCompatActivity {
 
   //  DBTool dbTool;
 
+
+    private NotificationManager notificationManager = null;
+    private Notification notification = null;
+    private RemoteViews contentView = null;
+    private boolean isRecording = false;
+    private boolean needCancel = false;
+
+
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-
                         String str=AimaAPI.AIMA_login(edit_user.getText().toString(),edit_pwd.getText().toString());
-
                         if (str.indexOf("|")>0)
                         {
                             AimaAPI.UID = str.substring(0, str.lastIndexOf("|"));
@@ -79,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }.start();
+
+
+              //  createRecordingNotification();
             }
         });
 
@@ -130,4 +144,59 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+
+
+
+    public  void createRecordingNotification() {
+    //创建通知
+        notificationManager = (NotificationManager) this
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        Resources res = this.getResources();
+        long when = System.currentTimeMillis();
+
+
+        notification =new Notification( );
+
+
+
+        notification.flags = Notification.FLAG_ONGOING_EVENT;
+
+        contentView = new RemoteViews(this.getPackageName(),
+                R.layout.notify_view);
+        contentView.setImageViewResource(R.mipmap.ic_launcher, R.mipmap.ic_launcher);
+        contentView.setTextViewText(R.id.text_notify_mobile, "sdsdssd");//录音中
+        contentView.setTextViewText(R.id.text_notify_status, "00:00");//录音时长
+
+        notification.contentView = contentView;//设置通知样式为自定义的样式
+
+//        Intent notificationIntent =new Intent();
+//        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//
+//        PendingIntent contentItent = PendingIntent.getActivity(this, 0,
+//                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        notification.contentIntent = contentItent;
+        notificationManager.notify(0, notification);
+
+
+
+
+
+ //       NotificationCompat.Builder mBuilder =new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("My notification").setContentText("Hello World!");
+//        Intent resultIntent = new Intent(this, MainActivity.class);
+//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+//        stackBuilder.addParentStack(MainActivity.class);
+//        stackBuilder.addNextIntent(resultIntent);
+//        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(resultPendingIntent);
+
+//        notification =new Notification( );
+//        contentView=new RemoteViews(this.getPackageName(), R.layout.notify_view);
+//        contentView.setTextViewText(R.id.text_notify_mobile, "00:00");
+//        notification.contentView=contentView;
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(0, notification);
+    }
+
 }

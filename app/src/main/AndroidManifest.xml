@@ -23,5 +23,9 @@
             android:label="@string/title_activity_user_info" >
         </activity>
     </application>
+        <activity
+            android:name=".Activity.Notify_Manage"
+            android:label="@string/title_activity_user_info" >
+        </activity>
 
 </manifest>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true"  >
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+               android:shape="rectangle">
+            <!--填充色  -->
+            <solid
+                android:color="#ffffff" />
+            <!-- 描边 -->
+            <!-- dashGap：- 与- 虚线之间的间隔  dashWidth: 实线的宽度width： color:-->
+            <!--       <stroke
+     android:dashGap="10dp"
+     android:dashWidth="5dp"
+     android:width="1dip"
+     android:color="#d3d3d3"
+     /> -->
+            <!-- 圆角 -->
+            <corners
+                android:topRightRadius="10dp"
+                android:bottomLeftRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomRightRadius="10dp"
+                />
+        </shape>
+    </item>
+    <item >
+        <!--shape:oval 椭圆     rectangle:方形    line：线性-->
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+               android:shape="rectangle">
+            <gradient
+                android:startColor="#55B4FE"
+                android:endColor="#3d8FFB"
+                android:type="linear"/>
+            <!-- 描边 -->
+            <!--       <stroke
+                  android:dashGap="10dp"
+     android:dashWidth="5dp"
+     android:width="1dip"
+     android:color="#d3d3d3"
+     /> -->
+            <!-- 圆角  上下左右四个角 弧度-->
+            <corners
+                android:topRightRadius="10dp"
+                android:bottomLeftRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomRightRadius="10dp"
+                />
+        </shape>
+    </item>
+</selector>
